@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 import { US_STATES, PE_DISCIPLINES } from "@/lib/stamp/constants";
 
 function useStampSvg(params: {
@@ -59,20 +60,18 @@ export default function DesignPage() {
   const params = { state, name, license, discipline, watermarked };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
+    <div className="min-h-screen flex flex-col bg-[#faf9f7]">
+      <header className="border-b border-slate-200 bg-[#faf9f7]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2 text-slate-800 hover:text-slate-600">
-            <span className="font-semibold">StampLr</span>
-          </Link>
-          <Link href="/" className="text-slate-600 hover:text-slate-900 text-sm">
+          <Logo />
+          <Link href="/" className="text-stamplr-gray hover:text-slate-900 text-sm font-medium">
             ← Home
           </Link>
         </div>
       </header>
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 py-8">
-        <h1 className="text-2xl font-bold text-slate-900 mb-8">Design your stamp</h1>
+        <h1 className="text-2xl font-bold text-stamplr-gray mb-8">Design your stamp</h1>
 
         <div className="grid lg:grid-cols-2 gap-10">
           <div className="space-y-5">
@@ -140,21 +139,21 @@ export default function DesignPage() {
                 <a
                   href={downloadUrl(params, "svg")}
                   download="stamp.svg"
-                  className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                  className="inline-flex items-center justify-center rounded-lg bg-stamplr-blue px-4 py-2.5 text-sm font-semibold text-white hover:bg-stamplr-blue/90"
                 >
                   SVG
                 </a>
                 <a
                   href={downloadUrl(params, "png")}
                   download="stamp.png"
-                  className="inline-flex items-center justify-center rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+                  className="inline-flex items-center justify-center rounded-lg bg-stamplr-gray px-4 py-2.5 text-sm font-semibold text-white hover:bg-stamplr-gray/90"
                 >
                   PNG
                 </a>
                 <a
                   href={downloadUrl(params, "pdf")}
                   download="stamp.pdf"
-                  className="inline-flex items-center justify-center rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+                  className="inline-flex items-center justify-center rounded-lg bg-stamplr-gray px-4 py-2.5 text-sm font-semibold text-white hover:bg-stamplr-gray/90"
                 >
                   PDF
                 </a>
@@ -163,7 +162,7 @@ export default function DesignPage() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-white p-6 min-h-[320px]">
+          <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-white p-6 min-h-[320px] shadow-sm">
             {svg ? (
               <div
                 className="max-w-full max-h-[420px] overflow-auto flex items-center justify-center"
