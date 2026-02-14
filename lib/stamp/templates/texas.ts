@@ -1,21 +1,21 @@
 /**
  * Texas PE stamp: uses the fixed reference SVG. Only name and license number are replaced.
- * Text size and font match the template (path bounds ~459–526 for name, ~594–660 for license).
+ * Prefers in-place replacement of text placeholders to preserve template font/size/position.
+ * Font: Technical Sans (or Arial fallback) for professional stamp look.
  */
 import type { StampRenderOptions } from "@/lib/stamp/types";
 import { readFileSync } from "fs";
 import { join } from "path";
+import {
+  escapeXml,
+  replaceNamePlaceholder,
+  replaceLicensePlaceholder,
+} from "./placeholder-utils";
 
 const TEMPLATE_PATH = join(process.cwd(), "lib", "stamp", "templates", "texas-reference.svg");
 
-function escapeXml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
+/** Technical sans-serif - professional stamp font. Arial as fallback. */
+const FONT_FAMILY = "'Technical Sans', 'Technic', Arial, sans-serif";
 
 export function renderTexasStamp(options: StampRenderOptions): string {
   let svg: string;
@@ -34,19 +34,40 @@ export function renderTexasStamp(options: StampRenderOptions): string {
   );
   svg = svg.replace(/<path d="[^"]*" fill="black"\/>\n?/g, "");
 
-  const nameFontSize = 54;
-  const licenseFontSize = 52;
-  const fontFamily = "Arial, sans-serif";
-  const textBlock = `
-  <text x="485" y="492" text-anchor="middle" font-family="${fontFamily}" font-weight="bold" font-size="${nameFontSize}" fill="black">${escapeXml(name)}</text>
-  <text x="485" y="627" text-anchor="middle" font-family="${fontFamily}" font-weight="bold" font-size="${licenseFontSize}" fill="black">${escapeXml(license)}</text>`;
+  // 1. Try in-place replacement of <text> placeholders (preserves font, size, position)
+  let nameReplaced = false;
+  let licenseReplaced = false;
 
-  svg = svg.replace("</svg>", `${textBlock}\n</svg>`);
+  const nameResult = replaceNamePlaceholder(svg, name);
+  svg = nameResult.svg;
+  nameReplaced = nameResult.replaced;
+
+  const licenseResult = replaceLicensePlaceholder(svg, license);
+  svg = licenseResult.svg;
+  licenseReplaced = licenseResult.replaced;
+
+  // 2. If no placeholders found, inject text (fallback)
+  if (!nameReplaced || !licenseReplaced) {
+    const nameFontSize = 54;
+    const licenseFontSize = 52;
+    const parts: string[] = [];
+    if (!nameReplaced)
+      parts.push(
+        `<text x="485" y="492" text-anchor="middle" font-family="${FONT_FAMILY}" font-weight="bold" font-size="${nameFontSize}" fill="black">${escapeXml(name)}</text>`
+      );
+    if (!licenseReplaced)
+      parts.push(
+        `<text x="485" y="627" text-anchor="middle" font-family="${FONT_FAMILY}" font-weight="bold" font-size="${licenseFontSize}" fill="black">${escapeXml(license)}</text>`
+      );
+    if (parts.length > 0) {
+      svg = svg.replace("</svg>", `${parts.join("\n  ")}\n</svg>`);
+    }
+  }
 
   if (options.watermarked) {
     svg = svg.replace(
       "</svg>",
-      `<text x="485" y="492" text-anchor="middle" fill="#ccc" font-size="54" font-weight="bold" font-family="Arial, sans-serif">SAMPLE</text>\n</svg>`
+      `<text x="485" y="492" text-anchor="middle" fill="#ccc" font-size="54" font-weight="bold" font-family="${FONT_FAMILY}">SAMPLE</text>\n</svg>`
     );
   }
 

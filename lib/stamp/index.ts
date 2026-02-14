@@ -1,12 +1,23 @@
 import type { StampRenderOptions } from "@/lib/stamp/types";
 import { renderTexasStamp } from "@/lib/stamp/templates/texas";
+import { renderMassachusettsStamp } from "@/lib/stamp/templates/massachusetts";
 
 export type { StampOptions, StampRenderOptions } from "@/lib/stamp/types";
-export { US_STATES, STAMP_TYPES, PE_DISCIPLINES } from "@/lib/stamp/constants";
+export {
+  STATES_WITH_TEMPLATES,
+  SEAL_TYPES,
+  PE_DISCIPLINES,
+  SEAL_TYPE_DISCIPLINES,
+  US_STATES,
+  STAMP_TYPES,
+} from "@/lib/stamp/constants";
 
 export function renderStamp(options: StampRenderOptions): string {
   if (options.template === "texas") {
     return renderTexasStamp(options);
+  }
+  if (options.template === "massachusetts") {
+    return renderMassachusettsStamp(options);
   }
   return renderGenericStamp(options);
 }

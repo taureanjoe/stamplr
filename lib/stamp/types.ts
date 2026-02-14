@@ -1,10 +1,11 @@
 export interface StampOptions {
   stateCode: string;
   stateName: string;
-  template: "texas" | "generic";
+  template: string;
   stampType: string;
   name: string;
   licenseNumber: string;
+  /** Engineering discipline (Civil, Mechanical, etc.) - used when state requires it */
   discipline: string;
 }
 

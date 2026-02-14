@@ -4,7 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { BottomNav } from "@/components/BottomNav";
-import { US_STATES, PE_DISCIPLINES } from "@/lib/stamp/constants";
+import {
+  STATES_WITH_TEMPLATES,
+  SEAL_TYPES,
+  PE_DISCIPLINES,
+  SEAL_TYPE_DISCIPLINES,
+} from "@/lib/stamp/constants";
 
 function useStampSvg(params: {
   state: string;
@@ -54,6 +59,7 @@ function downloadUrl(
 }
 
 export default function DesignPage() {
+  const [sealType, setSealType] = useState("pe");
   const [state, setState] = useState("tx");
   const [name, setName] = useState("");
   const [license, setLicense] = useState("");
@@ -77,6 +83,20 @@ export default function DesignPage() {
     discipline,
     watermarked,
   };
+
+  const availableStates = STATES_WITH_TEMPLATES.filter((s) => s.stampType === sealType);
+  const currentStateConfig = STATES_WITH_TEMPLATES.find((s) => s.code === state);
+  const disciplines = (SEAL_TYPE_DISCIPLINES[sealType] ?? PE_DISCIPLINES) as readonly string[];
+  const showDiscipline = sealType === "pe";
+
+  // Sync state when seal type changes and current state isn't available
+  useEffect(() => {
+    const states = STATES_WITH_TEMPLATES.filter((s) => s.stampType === sealType);
+    const exists = states.some((s) => s.code === state);
+    if (!exists && states.length > 0) {
+      setState(states[0].code);
+    }
+  }, [sealType, state]);
 
   function handleGenerateStamp() {
     const url = downloadUrl(params, fileType);
@@ -134,6 +154,26 @@ export default function DesignPage() {
               <h2 className="text-sm font-semibold text-white mb-4">Seal Details</h2>
               <div className="space-y-4">
                 <div>
+                  <label className="block text-sm font-medium text-white/80 mb-1.5">Credential Type</label>
+                  <select
+                    value={sealType}
+                    onChange={(e) => setSealType(e.target.value)}
+                    className={inputClass}
+                    style={selectStyle}
+                  >
+                    {SEAL_TYPES.filter((t) => !t.comingSoon).map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {t.name}
+                      </option>
+                    ))}
+                    {SEAL_TYPES.filter((t) => t.comingSoon).map((t) => (
+                      <option key={t.id} value={t.id} disabled>
+                        {t.name} (Coming Soon)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-white/80 mb-1.5">State</label>
                   <select
                     value={state}
@@ -141,28 +181,35 @@ export default function DesignPage() {
                     className={inputClass}
                     style={selectStyle}
                   >
-                    {US_STATES.map((s) => (
+                    {availableStates.map((s) => (
                       <option key={s.code} value={s.code}>
                         {s.name}
                       </option>
                     ))}
                   </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1.5">Discipline</label>
-                  <select
-                    value={discipline}
-                    onChange={(e) => setDiscipline(e.target.value)}
-                    className={inputClass}
-                    style={selectStyle}
-                  >
-                    {PE_DISCIPLINES.map((d) => (
-                      <option key={d} value={d}>
-                        {d}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {showDiscipline && (
+                  <div>
+                    <label className="block text-sm font-medium text-white/80 mb-1.5">
+                      Discipline
+                      {currentStateConfig?.requiresDiscipline && (
+                        <span className="text-blue-400/80 ml-1">(required on stamp)</span>
+                      )}
+                    </label>
+                    <select
+                      value={discipline}
+                      onChange={(e) => setDiscipline(e.target.value)}
+                      className={inputClass}
+                      style={selectStyle}
+                    >
+                      {disciplines.map((d) => (
+                        <option key={d} value={d}>
+                          {d}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm font-medium text-white/80 mb-1.5">Full Name</label>
                   <input

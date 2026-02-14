@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { renderStamp } from "@/lib/stamp";
-import { US_STATES } from "@/lib/stamp/constants";
+import { STATES_WITH_TEMPLATES } from "@/lib/stamp/constants";
 import type { StampRenderOptions } from "@/lib/stamp/types";
 import sharp from "sharp";
 import { jsPDF } from "jspdf";
@@ -11,10 +11,10 @@ export async function GET(request: NextRequest) {
   const stateCode = searchParams.get("state") ?? "tx";
   const name = searchParams.get("name") ?? "JOHN M. DOE";
   const licenseNumber = searchParams.get("license") ?? "000000";
-  const discipline = searchParams.get("discipline") ?? "Civil";
+  const discipline = searchParams.get("discipline") ?? "Professional Engineer";
   const watermarked = searchParams.get("watermarked") === "1";
 
-  const state = US_STATES.find((s) => s.code === stateCode) ?? US_STATES[0];
+  const state = STATES_WITH_TEMPLATES.find((s) => s.code === stateCode) ?? STATES_WITH_TEMPLATES[0];
   const options: StampRenderOptions = {
     stateCode: state.code,
     stateName: state.name,
