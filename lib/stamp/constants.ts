@@ -1,5 +1,9 @@
 export const US_STATES = [
   { code: "tx", name: "Texas", template: "texas" as const },
+  { code: "pa", name: "Pennsylvania", template: "generic" as const },
+  { code: "ca", name: "California", template: "generic" as const },
+  { code: "ny", name: "New York", template: "generic" as const },
+  { code: "fl", name: "Florida", template: "generic" as const },
 ];
 
 export const STAMP_TYPES = [
@@ -8,6 +12,7 @@ export const STAMP_TYPES = [
 ] as const;
 
 export const PE_DISCIPLINES = [
+  "Professional Engineer",
   "Civil",
   "Mechanical",
   "Electrical",
