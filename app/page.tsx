@@ -78,8 +78,14 @@ export default function HomePage() {
           @media (max-width: 768px) { #navLinks { display: none !important; } #navActions .ghost { display: none !important; } }
         `}</style>
         <ul id="navLinks" style={{ alignItems: 'center', gap: 2, listStyle: 'none', padding: 0, margin: 0 }}>
-          {[["Features", "#features"], ["Pricing", "#pricing"], ["Support", "#"]].map(([label, href]) => (
-            <li key={label}><a href={href} style={{ fontSize: 13.5, color: 'var(--text-dim)', textDecoration: 'none', padding: '5px 13px', borderRadius: 20, transition: 'color .15s, background .15s', display: 'flex', alignItems: 'center' }}>{label}</a></li>
+          {[["Features", "#features"], ["Pricing", "#pricing"], ["Support", "/support"]].map(([label, href]) => (
+            <li key={label}>
+              {href.startsWith("/") ? (
+                <Link href={href} style={{ fontSize: 13.5, color: "var(--text-dim)", textDecoration: "none", padding: "5px 13px", borderRadius: 20, transition: "color .15s, background .15s", display: "flex", alignItems: "center" }}>{label}</Link>
+              ) : (
+                <a href={href} style={{ fontSize: 13.5, color: "var(--text-dim)", textDecoration: "none", padding: "5px 13px", borderRadius: 20, transition: "color .15s, background .15s", display: "flex", alignItems: "center" }}>{label}</a>
+              )}
+            </li>
           ))}
         </ul>
 
@@ -461,7 +467,7 @@ export default function HomePage() {
               { title: "Product", links: [["Create Seal", "/design"], ["My Seals", "#"], ["Team Plans", "#"], ["Pricing", "#pricing"]] },
               { title: "Coverage", links: [["Supported States", "#"], ["Credential Types", "#"], ["State Updates", "#"], ["Request a State", "#"]] },
               { title: "Legal", links: [["Terms of Use", "#"], ["Privacy Policy", "#"], ["Authorized Use", "#"], ["Compliance Notes", "#"]] },
-              { title: "Support", links: [["Help Center", "#"], ["Contact Us", "#"], ["Status", "#"]] },
+              { title: "Support", links: [["Help Center", "/support"], ["Contact Us", "#"], ["Status", "#"]] },
             ].map((col) => (
               <div key={col.title}>
                 <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-dim)', marginBottom: 14 }}>{col.title}</div>
