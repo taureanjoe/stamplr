@@ -84,12 +84,34 @@ function replaceByDataAttr(
 }
 
 /**
+ * Split full name for MA two-line format: "JOHN M. DOE" → ["JOHN M.", "DOE"].
+ */
+export function splitNameForTwoLines(name: string): [string, string] {
+  const lastSpaceIdx = name.lastIndexOf(" ");
+  if (lastSpaceIdx >= 0) {
+    return [name.slice(0, lastSpaceIdx), name.slice(lastSpaceIdx + 1)];
+  }
+  return [name, ""];
+}
+
+/**
  * Replace name placeholder. Tries data-placeholder first, then content match.
+ * Supports split format (name-first + name-last) for MA two-line stamps.
  */
 export function replaceNamePlaceholder(
   svg: string,
   name: string
 ): { svg: string; replaced: boolean } {
+  const hasSplitPlaceholders =
+    svg.includes('data-placeholder="name-first"') && svg.includes('data-placeholder="name-last"');
+  if (hasSplitPlaceholders) {
+    const [firstName, lastName] = splitNameForTwoLines(name);
+    let svgOut = svg;
+    const r1 = replaceByDataAttr(svgOut, "name-first", firstName);
+    svgOut = r1.svg;
+    const r2 = replaceByDataAttr(svgOut, "name-last", lastName);
+    return { svg: r2.svg, replaced: r1.replaced || r2.replaced };
+  }
   let result = replaceByDataAttr(svg, "name", name);
   if (result.replaced) return result;
   return replaceByContent(svg, NAME_PLACEHOLDERS, name);

@@ -7,8 +7,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-dark relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-glow pointer-events-none" />
-      <header className="relative z-10 glass rounded-2xl mx-4 mt-4">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+      <header className="relative z-10 border-b border-white/[0.06] bg-surface/80 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
           <Logo />
           <nav className="hidden md:flex items-center gap-8 text-white/80 text-sm font-medium">
             <a href="#products" className="hover:text-white flex items-center gap-1">

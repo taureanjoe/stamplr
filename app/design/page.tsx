@@ -63,9 +63,10 @@ export default function DesignPage() {
   const [state, setState] = useState("tx");
   const [name, setName] = useState("");
   const [license, setLicense] = useState("");
-  const [discipline, setDiscipline] = useState("Professional Engineer");
+  const [discipline, setDiscipline] = useState("Civil");
   const [fileType, setFileType] = useState<"svg" | "png" | "pdf">("svg");
   const [watermarked, setWatermarked] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const displayName = name || "JOHN DOE";
   const displayLicense = license || "No. PE123456";
@@ -89,7 +90,6 @@ export default function DesignPage() {
   const disciplines = (SEAL_TYPE_DISCIPLINES[sealType] ?? PE_DISCIPLINES) as readonly string[];
   const showDiscipline = sealType === "pe";
 
-  // Sync state when seal type changes and current state isn't available
   useEffect(() => {
     const states = STATES_WITH_TEMPLATES.filter((s) => s.stampType === sealType);
     const exists = states.some((s) => s.code === state);
@@ -106,175 +106,241 @@ export default function DesignPage() {
     a.click();
   }
 
-  const inputClass =
-    "w-full rounded-lg border border-white/20 bg-white/5 pl-3 pr-10 py-2.5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 appearance-none bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat";
-  const selectStyle = {
-    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-  };
+  function handleCopySvg() {
+    if (svg) {
+      navigator.clipboard.writeText(svg);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
+
+  const hasData = name.trim() !== "" || license.trim() !== "";
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-dark relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-glow pointer-events-none" />
-      <header className="relative z-10 glass rounded-2xl mx-4 mt-4">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
-          <Logo />
-          <nav className="hidden md:flex items-center gap-8 text-white/80 text-sm font-medium">
-            <Link href="/design" className="text-white font-medium">
+    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ background: '#0f0f11' }}>
+
+      {/* Header */}
+      <header className="relative z-10" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(24,24,28,0.9)', backdropFilter: 'blur(20px)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
+          <div className="flex items-center gap-4">
+            <Logo />
+            <span
+              className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] tracking-[1px]"
+              style={{ fontFamily: "'Share Tech Mono', monospace", color: '#4e9eff', background: 'rgba(78,158,255,0.08)', border: '1px solid rgba(78,158,255,0.2)' }}
+            >
+              SEAL GENERATOR
+            </span>
+          </div>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <Link href="/design" className="font-medium" style={{ color: '#fff' }}>
               Create Stamp
             </Link>
-            <a href="#pricing" className="hover:text-white">Pricing</a>
-            <a href="#support" className="hover:text-white">Support</a>
-            <a href="#features" className="hover:text-white">Features</a>
+            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+            <a href="#support" className="hover:text-white transition-colors">Support</a>
           </nav>
           <div className="flex items-center gap-2">
             <Link href="/" className="btn-glass shrink-0">
-              ← Home
+              Home
             </Link>
-            <button
-              type="button"
-              className="md:hidden p-2 text-white/80 shrink-0"
-              aria-label="Menu"
-            >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
           </div>
         </div>
       </header>
 
-      <main className="relative z-10 flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 pb-24 md:pb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-white mb-8">
-          Configure Your Seal
-        </h1>
+      {/* Main Content */}
+      <main className="relative z-10 flex-1 pb-24 md:pb-0">
+        <div className="flex flex-col lg:flex-row" style={{ minHeight: 'calc(100vh - 56px)' }}>
 
-        <div className="grid lg:grid-cols-2 gap-10">
-          <div className="order-2 lg:order-1 space-y-6">
-            <div className="glass-card p-6">
-              <h2 className="text-sm font-semibold text-white mb-4">Seal Details</h2>
-              <div className="space-y-4">
+          {/* Left Panel */}
+          <div
+            className="lg:w-[400px] lg:shrink-0 p-6 lg:p-7 overflow-y-auto"
+            style={{ background: 'rgba(24,24,28,0.7)', borderRight: '1px solid rgba(255,255,255,0.06)' }}
+          >
+            {/* Seal Configuration */}
+            <h2 className="section-title">Seal Configuration</h2>
+
+            <div className="space-y-5">
+              <div>
+                <label className="field-label">Credential Type</label>
+                <select
+                  value={sealType}
+                  onChange={(e) => setSealType(e.target.value)}
+                  className="input-dark"
+                >
+                  {SEAL_TYPES.filter((t) => !t.comingSoon).map((t) => (
+                    <option key={t.id} value={t.id}>{t.name}</option>
+                  ))}
+                  {SEAL_TYPES.filter((t) => t.comingSoon).map((t) => (
+                    <option key={t.id} value={t.id} disabled>{t.name} (Coming Soon)</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="field-label">State</label>
+                <select
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  className="input-dark"
+                >
+                  {availableStates.map((s) => (
+                    <option key={s.code} value={s.code}>{s.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              {showDiscipline && (
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1.5">Credential Type</label>
+                  <label className="field-label">
+                    Discipline
+                    {currentStateConfig?.requiresDiscipline && (
+                      <span style={{ color: '#4e9eff', marginLeft: 6, fontSize: 11 }}>(shown on stamp)</span>
+                    )}
+                  </label>
                   <select
-                    value={sealType}
-                    onChange={(e) => setSealType(e.target.value)}
-                    className={inputClass}
-                    style={selectStyle}
+                    value={discipline}
+                    onChange={(e) => setDiscipline(e.target.value)}
+                    className="input-dark"
                   >
-                    {SEAL_TYPES.filter((t) => !t.comingSoon).map((t) => (
-                      <option key={t.id} value={t.id}>
-                        {t.name}
-                      </option>
-                    ))}
-                    {SEAL_TYPES.filter((t) => t.comingSoon).map((t) => (
-                      <option key={t.id} value={t.id} disabled>
-                        {t.name} (Coming Soon)
-                      </option>
+                    {disciplines.map((d) => (
+                      <option key={d} value={d}>{d}</option>
                     ))}
                   </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1.5">State</label>
-                  <select
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    className={inputClass}
-                    style={selectStyle}
-                  >
-                    {availableStates.map((s) => (
-                      <option key={s.code} value={s.code}>
-                        {s.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {showDiscipline && (
-                  <div>
-                    <label className="block text-sm font-medium text-white/80 mb-1.5">
-                      Discipline
-                      {currentStateConfig?.requiresDiscipline && (
-                        <span className="text-blue-400/80 ml-1">(required on stamp)</span>
-                      )}
-                    </label>
-                    <select
-                      value={discipline}
-                      onChange={(e) => setDiscipline(e.target.value)}
-                      className={inputClass}
-                      style={selectStyle}
-                    >
-                      {disciplines.map((d) => (
-                        <option key={d} value={d}>
-                          {d}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-                <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1.5">Full Name</label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter your full name"
-                    className="w-full rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1.5">License Number</label>
-                  <input
-                    type="text"
-                    value={license}
-                    onChange={(e) => setLicense(e.target.value)}
-                    placeholder="Enter your license number"
-                    className="w-full rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
-                  />
-                </div>
+              )}
+            </div>
+
+            {/* Divider */}
+            <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '24px 0' }} />
+
+            {/* Engineer Details */}
+            <h2 className="section-title">Engineer Details</h2>
+            <div className="space-y-5">
+              <div>
+                <label className="field-label">Full Name</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="JOHN DOE"
+                  className="input-dark"
+                />
+                <p className="hint-text">First and last name</p>
+              </div>
+              <div>
+                <label className="field-label">License Number</label>
+                <input
+                  type="text"
+                  value={license}
+                  onChange={(e) => setLicense(e.target.value)}
+                  placeholder="PE123456"
+                  className="input-dark"
+                />
+                <p className="hint-text">Numeric license ID</p>
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">File Type</label>
-              <div className="inline-flex rounded-full border border-white/20 bg-white/5 p-0.5">
-                {(["svg", "png", "pdf"] as const).map((fmt) => (
-                  <button
-                    key={fmt}
-                    type="button"
-                    onClick={() => setFileType(fmt)}
-                    className={`px-4 py-2 text-sm font-medium rounded-full transition-colors uppercase ${
-                      fileType === fmt
-                        ? "bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 text-white"
-                        : "text-white/70 hover:text-white hover:bg-white/10"
-                    }`}
-                  >
-                    {fmt}
-                  </button>
-                ))}
-              </div>
+            {/* Divider */}
+            <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '24px 0' }} />
+
+            {/* Output Format */}
+            <h2 className="section-title">Output Format</h2>
+            <div className="flex gap-2 mb-6">
+              {(["svg", "png", "pdf"] as const).map((fmt) => (
+                <button
+                  key={fmt}
+                  type="button"
+                  onClick={() => setFileType(fmt)}
+                  className="flex-1 py-2.5 text-xs uppercase tracking-widest rounded-md border transition-all"
+                  style={
+                    fileType === fmt
+                      ? { background: 'rgba(78,158,255,0.12)', borderColor: 'rgba(78,158,255,0.4)', color: '#4e9eff', fontFamily: "'Share Tech Mono', monospace" }
+                      : { background: 'transparent', borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.4)', fontFamily: "'Share Tech Mono', monospace" }
+                  }
+                >
+                  {fmt}
+                </button>
+              ))}
             </div>
 
+            {/* Download */}
             <button
               type="button"
               onClick={handleGenerateStamp}
-              className="btn-gradient w-full py-3.5"
+              className="btn-accent w-full"
             >
-              Generate Stamp
+              Download {fileType.toUpperCase()}
+            </button>
+
+            {/* Copy SVG */}
+            <button
+              type="button"
+              onClick={handleCopySvg}
+              className="btn-outline-purple w-full mt-3"
+            >
+              {copied ? "Copied!" : "Copy SVG Code"}
             </button>
           </div>
 
-          <div className="order-1 lg:order-2">
-            <h2 className="text-sm font-semibold text-white mb-4">Live Preview</h2>
-            <div className="glass-card p-6 min-h-[320px] flex items-center justify-center">
-              {svg ? (
-                <div
-                  className="max-w-full max-h-[400px] overflow-auto flex items-center justify-center"
-                  dangerouslySetInnerHTML={{ __html: svg }}
-                />
-              ) : (
-                <p className="text-white/50">Loading preview…</p>
-              )}
+          {/* Right Panel - Preview */}
+          <div
+            className="flex-1 flex flex-col items-center justify-center p-6 lg:p-10 relative"
+            style={{ background: '#111114', minHeight: 400 }}
+          >
+            {/* Preview Label */}
+            <div
+              className="absolute top-5 left-7"
+              style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: 10, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}
+            >
+              Live Preview
+            </div>
+
+            {/* White Background Preview Container */}
+            <div className="w-full" style={{ maxWidth: 480 }}>
+              <div
+                style={{
+                  background: '#ffffff',
+                  borderRadius: 12,
+                  padding: 24,
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+                }}
+              >
+                {svg ? (
+                  <div
+                    style={{ width: '100%' }}
+                    dangerouslySetInnerHTML={{ __html: svg.replace(
+                      /<svg /,
+                      '<svg style="width:100%;height:auto;display:block" '
+                    )}}
+                  />
+                ) : (
+                  <div style={{ aspectRatio: '1/1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <p style={{ color: '#999', fontFamily: "'Share Tech Mono', monospace", fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Loading preview...</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Status bar */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2"
+              style={{
+                bottom: 16,
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: 10,
+                letterSpacing: 1,
+                padding: '5px 16px',
+                borderRadius: 20,
+                whiteSpace: 'nowrap',
+                ...(hasData
+                  ? { color: '#4ade80', borderColor: 'rgba(74,222,128,0.3)', background: 'rgba(74,222,128,0.05)', border: '1px solid rgba(74,222,128,0.3)' }
+                  : { color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(24,24,28,0.6)' }
+                ),
+              }}
+            >
+              {hasData ? `${displayName} \u00b7 ${discipline.toUpperCase()} \u00b7 ${displayLicense}` : "Enter details to preview"}
             </div>
           </div>
+
         </div>
       </main>
 
