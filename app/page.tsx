@@ -77,7 +77,7 @@ export default function HomePage() {
 
         <div id="navActions" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <button className="ghost btn-glass">Log in</button>
-          <Link href="/design" style={{ fontSize: 13, fontWeight: 600, color: '#fff', background: 'var(--accent)', border: 'none', padding: '7px 18px', borderRadius: 'var(--r)', cursor: 'pointer', textDecoration: 'none', fontFamily: "'DM Sans', sans-serif", letterSpacing: '.01em', transition: 'all .15s' }}>
+          <Link href="/design" style={{ fontSize: 13, fontWeight: 600, color: '#fff', background: 'var(--accent)', border: 'none', padding: '7px 18px', borderRadius: 20, cursor: 'pointer', textDecoration: 'none', fontFamily: "'DM Sans', sans-serif", letterSpacing: '.01em', transition: 'all .15s' }}>
             Design Your Stamp →
           </Link>
         </div>
@@ -110,8 +110,8 @@ export default function HomePage() {
               <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--accent)' }}>State-Compliant Engineering Seals</span>
             </div>
 
-            <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(38px, 4.5vw, 62px)', fontWeight: 800, lineHeight: 1.05, letterSpacing: '-1.5px', color: 'var(--text)', marginBottom: 22 }}>
-              Professional<br />Seals,<br /><em style={{ fontStyle: 'normal', background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Reimagined.</em>
+            <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(38px, 4.5vw, 62px)', fontWeight: 800, lineHeight: 1.05, letterSpacing: '-1.5px', color: 'var(--text)', marginBottom: 22 }}>
+              Engineering<br />Seals,<br /><em style={{ fontStyle: 'normal', background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Reimagined.</em>
             </h1>
 
             <p style={{ fontSize: 16, color: 'var(--text-mid, #9898a8)', lineHeight: 1.65, maxWidth: 440, marginBottom: 34 }}>
@@ -144,7 +144,7 @@ export default function HomePage() {
                   <div key={i} className="trust-sep-el" style={{ width: 1, height: 32, background: 'var(--border2, rgba(255,255,255,0.11))', flexShrink: 0 }} />
                 ) : (
                   <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 20, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.5px' }}>{item[0]}</span>
+                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 20, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.5px' }}>{item[0]}</span>
                     <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '.09em', textTransform: 'uppercase', color: 'var(--text-dim)' }}>{item[1]}</span>
                   </div>
                 )
@@ -178,7 +178,7 @@ export default function HomePage() {
                   <rect x="33" y="48" width="24" height="18" rx="3" fill="#1e3a5f" stroke="rgba(255,255,255,.1)" strokeWidth="1"/>
                   <rect x="10" y="62" width="70" height="44" rx="5" fill="url(#pg)" stroke="rgba(255,255,255,.1)" strokeWidth="1"/>
                   <rect x="12" y="92" width="66" height="12" rx="3" fill="#1a2f4a" stroke="rgba(96,165,250,.3)" strokeWidth="1"/>
-                  <text x="45" y="83" fontFamily="'Syne', sans-serif" fontSize="7" fontWeight="700" fill="rgba(96,165,250,0.7)" textAnchor="middle" letterSpacing="1.5">STAMPLR</text>
+                  <text x="45" y="83" fontFamily="'DM Sans', sans-serif" fontSize="7" fontWeight="700" fill="rgba(96,165,250,0.7)" textAnchor="middle" letterSpacing="1.5">STAMPLR</text>
                 </svg>
               </div>
 
@@ -203,7 +203,7 @@ export default function HomePage() {
                 <g transform="translate(358, 58)"><circle cx="0" cy="0" r="20" fill="none" stroke="#445" strokeWidth="1"/><polygon points="0,-17 5,5 0,2 -5,5" fill="#223"/><text x="0" y="-23" fontSize="9" fontWeight="700" fill="#223" textAnchor="middle">N</text></g>
                 <rect x="14" y="268" width="452" height="76" fill="rgba(200,195,180,0.3)" stroke="#334" strokeWidth="1"/>
                 <line x1="200" y1="268" x2="200" y2="344" stroke="#334" strokeWidth="0.8"/><line x1="330" y1="268" x2="330" y2="344" stroke="#334" strokeWidth="0.8"/>
-                <text x="107" y="293" fontSize="10" fontWeight="bold" fill="#223" textAnchor="middle" fontFamily="'Syne',sans-serif">RIVERSIDE RESIDENCE</text>
+                <text x="107" y="293" fontSize="10" fontWeight="bold" fill="#223" textAnchor="middle" fontFamily="'DM Sans',sans-serif">RIVERSIDE RESIDENCE</text>
                 <text x="265" y="294" fontSize="9" fontWeight="bold" fill="#223" textAnchor="middle">JOHN DOE, PE</text>
                 <text x="265" y="306" fontSize="7" fill="#445" textAnchor="middle" opacity="0.7">CIVIL ENGINEERING</text>
                 <text x="398" y="316" fontSize="9" fill="#223" textAnchor="middle" fontWeight="bold">A-1.00</text>
@@ -255,7 +255,7 @@ export default function HomePage() {
           <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />How it works
           </div>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 14, lineHeight: 1.15 }}>From license number<br />to print-ready seal in minutes.</h2>
+          <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 14, lineHeight: 1.15 }}>From license number<br />to print-ready seal in minutes.</h2>
           <p style={{ fontSize: 15, color: 'var(--text-mid, #9898a8)', maxWidth: 500, lineHeight: 1.65, marginBottom: 56 }}>No design skills. No software. Just enter your details and we generate a state-compliant seal — ready for documents, drawings, and digital workflows.</p>
 
           <div id="stepsGrid">
@@ -267,7 +267,7 @@ export default function HomePage() {
             ].map(([num, title, desc]) => (
               <div key={num} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '24px 20px 22px', position: 'relative', transition: 'border-color .2s, background .2s' }}>
                 <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(96,165,250,0.14)', border: '1px solid rgba(96,165,250,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'DM Mono', monospace", fontSize: 12, fontWeight: 500, color: 'var(--accent)', marginBottom: 16, position: 'relative', zIndex: 1 }}>{num}</div>
-                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>{title}</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>{title}</div>
                 <div style={{ fontSize: 13, color: 'var(--text-mid, #9898a8)', lineHeight: 1.6 }}>{desc}</div>
               </div>
             ))}
@@ -285,7 +285,7 @@ export default function HomePage() {
           <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />Capabilities
           </div>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 40, lineHeight: 1.15 }}>Everything a licensed engineer needs.</h2>
+          <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 40, lineHeight: 1.15 }}>Everything a licensed engineer needs.</h2>
 
           <div id="featGrid">
             {[
@@ -300,7 +300,7 @@ export default function HomePage() {
                 <div style={{ display: 'flex', gap: 12, alignItems: f.wide ? 'flex-start' : undefined }}>
                   <div style={{ width: 38, height: 38, borderRadius: 'var(--r)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, flexShrink: 0, background: f.color }}>{f.icon}</div>
                   <div>
-                    <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>{f.title}</div>
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>{f.title}</div>
                     {f.wide && <div style={{ fontSize: 13, color: 'var(--text-mid, #9898a8)', lineHeight: 1.65, marginTop: 4 }}>{f.desc}</div>}
                   </div>
                 </div>
@@ -327,7 +327,7 @@ export default function HomePage() {
             <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />Coverage
             </div>
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 24, fontWeight: 700, letterSpacing: '-.5px', color: 'var(--text)', marginBottom: 10, lineHeight: 1.25 }}>Board-verified for {stateCount} states.<br />More added regularly.</h3>
+            <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 24, fontWeight: 700, letterSpacing: '-.5px', color: 'var(--text)', marginBottom: 10, lineHeight: 1.25 }}>Board-verified for {stateCount} states.<br />More added regularly.</h3>
             <p style={{ fontSize: 13.5, color: 'var(--text-mid, #9898a8)', lineHeight: 1.6, marginTop: 10 }}>Each seal template is verified against the current rules of the relevant state engineering board. When boards update their seal requirements, we update the templates.</p>
           </div>
           <div id="statesGrid">
@@ -335,7 +335,7 @@ export default function HomePage() {
               const active = supportedCodes.has(s.code);
               return (
                 <div key={s.code} style={{ background: active ? 'rgba(96,165,250,0.14)' : 'var(--bg3)', border: active ? '1px solid rgba(96,165,250,.3)' : '1px solid var(--border)', borderRadius: 'var(--r)', padding: '8px 6px', textAlign: 'center', transition: 'all .15s', opacity: active ? 1 : 0.4 }}>
-                  <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700, color: active ? 'var(--text)' : 'var(--text-dim)', display: 'block' }}>{s.code}</span>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 700, color: active ? 'var(--text)' : 'var(--text-dim)', display: 'block' }}>{s.code}</span>
                   <span className="state-full-name" style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, letterSpacing: '.05em', color: 'var(--text-dim)', display: 'block', marginTop: 2, textTransform: 'uppercase' }}>{s.name}</span>
                 </div>
               );
@@ -354,7 +354,7 @@ export default function HomePage() {
           <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />Pricing
           </div>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 14, lineHeight: 1.15 }}>Simple, honest pricing.</h2>
+          <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 14, lineHeight: 1.15 }}>Simple, honest pricing.</h2>
           <p style={{ fontSize: 15, color: 'var(--text-mid, #9898a8)', maxWidth: 500, lineHeight: 1.65 }}>No subscriptions, no upsells for individual engineers. Pay once, download instantly.</p>
 
           <div id="pricingGrid">
@@ -368,7 +368,7 @@ export default function HomePage() {
                 {p.featured && <span style={{ position: 'absolute', top: 16, right: 16, fontFamily: "'DM Mono', monospace", fontSize: 8.5, letterSpacing: '.1em', textTransform: 'uppercase', background: 'rgba(96,165,250,0.14)', color: 'var(--accent)', border: '1px solid rgba(96,165,250,.25)', padding: '2px 8px', borderRadius: 20 }}>Most Popular</span>}
                 <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-dim)' }}>{p.tier}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                  <span style={{ fontFamily: "'Syne', sans-serif", fontSize: p.price === "Custom" ? 30 : 38, fontWeight: 700, color: 'var(--text)', letterSpacing: '-1px', lineHeight: 1 }}>{p.price}</span>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: p.price === "Custom" ? 30 : 38, fontWeight: 700, color: 'var(--text)', letterSpacing: '-1px', lineHeight: 1 }}>{p.price}</span>
                   {p.per && <span style={{ fontSize: 12, color: 'var(--text-dim)', fontFamily: "'DM Mono', monospace" }}>{p.per}</span>}
                 </div>
                 <p style={{ fontSize: 13, color: 'var(--text-mid, #9898a8)', lineHeight: 1.55 }}>{p.desc}</p>
@@ -376,7 +376,7 @@ export default function HomePage() {
                   {p.features.map((f) => <li key={f} style={{ fontSize: 13, color: 'var(--text-mid, #9898a8)', display: 'flex', alignItems: 'flex-start', gap: 9 }}><span style={{ color: '#4ade80', fontWeight: 700, fontSize: 12, flexShrink: 0, marginTop: 2 }}>✓</span>{f}</li>)}
                   {p.off.map((f) => <li key={f} style={{ fontSize: 13, color: 'var(--text-mid, #9898a8)', display: 'flex', alignItems: 'flex-start', gap: 9, opacity: 0.35 }}><span style={{ color: 'var(--text-dim)', fontWeight: 700, fontSize: 12, flexShrink: 0, marginTop: 2 }}>—</span>{f}</li>)}
                 </ul>
-                <button style={{ width: '100%', padding: 11, borderRadius: 'var(--r)', fontFamily: "'DM Sans', sans-serif", fontSize: 13.5, fontWeight: 600, cursor: 'pointer', border: p.btn === "solid" ? 'none' : '1px solid var(--border2, rgba(255,255,255,0.11))', background: p.btn === "solid" ? 'var(--accent)' : 'none', color: p.btn === "solid" ? '#fff' : 'var(--text-dim)', transition: 'all .15s' }}>{p.label}</button>
+                <button style={{ width: '100%', padding: 11, borderRadius: 12, fontFamily: "'DM Sans', sans-serif", fontSize: 13.5, fontWeight: 600, cursor: 'pointer', border: p.btn === "solid" ? 'none' : '1px solid var(--border2, rgba(255,255,255,0.11))', background: p.btn === "solid" ? 'var(--accent)' : 'none', color: p.btn === "solid" ? '#fff' : 'var(--text-dim)', transition: 'all .15s' }}>{p.label}</button>
               </div>
             ))}
           </div>
@@ -393,12 +393,12 @@ export default function HomePage() {
           <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />Questions
           </div>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', lineHeight: 1.15 }}>Frequently asked questions.</h2>
+          <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: 'var(--text)', lineHeight: 1.15 }}>Frequently asked questions.</h2>
 
           <div id="faqGrid">
             {FAQS.map((faq, i) => (
               <div key={i} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
-                <div onClick={() => setOpenFaq(openFaq === i ? -1 : i)} style={{ padding: '18px 20px', fontFamily: "'Syne', sans-serif", fontSize: 14, fontWeight: 600, color: 'var(--text)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, userSelect: 'none', transition: 'background .15s' }}>
+                <div onClick={() => setOpenFaq(openFaq === i ? -1 : i)} style={{ padding: '18px 20px', fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600, color: 'var(--text)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, userSelect: 'none', transition: 'background .15s' }}>
                   {faq.q}
                   <span style={{ fontSize: 12, color: 'var(--text-dim)', transition: 'transform .2s', transform: openFaq === i ? 'rotate(180deg)' : 'rotate(0)', flexShrink: 0 }}>▾</span>
                 </div>
@@ -422,7 +422,7 @@ export default function HomePage() {
         <div id="ctaBand">
           <div id="ctaInner" style={{ maxWidth: 1300, margin: '0 auto', background: 'linear-gradient(135deg, #0e1a2e 0%, #0f1520 50%, #0a0f1a 100%)', border: '1px solid rgba(96,165,250,.2)', borderRadius: 20, padding: 64, display: 'grid', gridTemplateColumns: '1fr auto', gap: 40, alignItems: 'center', overflow: 'hidden', position: 'relative' }}>
             <div style={{ position: 'relative', zIndex: 1 }}>
-              <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: 800, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 12, lineHeight: 1.15 }}>Your seal, ready in<br />under 5 minutes.</h2>
+              <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(26px, 3vw, 38px)', fontWeight: 800, letterSpacing: '-1px', color: 'var(--text)', marginBottom: 12, lineHeight: 1.15 }}>Your seal, ready in<br />under 5 minutes.</h2>
               <p style={{ fontSize: 15, color: 'var(--text-mid, #9898a8)', maxWidth: 440, lineHeight: 1.6 }}>Join thousands of licensed engineers who&apos;ve replaced slow, expensive seal orders with an instant, compliant digital workflow.</p>
             </div>
             <div id="ctaActions" style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center', position: 'relative', zIndex: 1, flexShrink: 0 }}>
@@ -443,7 +443,7 @@ export default function HomePage() {
         <div id="footerInner" style={{ maxWidth: 1300, margin: '0 auto' }}>
           <div>
             <Logo />
-            <p style={{ fontSize: 12.5, color: 'var(--text-dim)', lineHeight: 1.65, marginTop: 12, maxWidth: 200 }}>Professional engineering seals for the modern PE. Compliant, instant, and affordable.</p>
+            <p style={{ fontSize: 12.5, color: 'var(--text-dim)', lineHeight: 1.65, marginTop: 12, maxWidth: 200 }}>State-compliant engineering seals for the modern PE. Instant and affordable.</p>
           </div>
           <div id="footerLinks">
             {[

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "StampLr – Professional Seals for Engineers & Notaries",
+  title: "Stamplr – Engineering Seals, Reimagined",
   description:
     "Design, manage, and deploy your official stamps with modern precision. Cloud-secure and compliant.",
 };

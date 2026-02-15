@@ -552,7 +552,7 @@ export default function DesignPage() {
             `}</style>
             <div id="desktopInfoPanel" style={{ flexDirection: 'column', gap: 18, maxWidth: 240 }}>
               <div>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 17, fontWeight: 700, letterSpacing: '-0.3px', color: 'var(--text)', marginBottom: 4 }}>
+                <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, fontWeight: 700, letterSpacing: '-0.3px', color: 'var(--text)', marginBottom: 4 }}>
                   {name || "Your Name"}
                 </h3>
                 <p style={{ fontSize: 12.5, color: 'var(--text-dim)', lineHeight: 1.5 }}>
@@ -624,7 +624,7 @@ export default function DesignPage() {
             padding: '0 16px 8px',
           }}>
             <div>
-              <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 15, fontWeight: 700, letterSpacing: '-0.2px', color: 'var(--text)' }}>
+              <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 700, letterSpacing: '-0.2px', color: 'var(--text)' }}>
                 {name || "Your Name"}
               </h3>
               <p style={{ fontSize: 11.5, color: 'var(--text-dim)', marginTop: 1 }}>
