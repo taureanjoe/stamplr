@@ -32,6 +32,13 @@ export const STATES_WITH_TEMPLATES: StateConfig[] = [
     stampType: "pe",
     requiresDiscipline: true,
   },
+  {
+    code: "mo",
+    name: "Missouri",
+    template: "missouri",
+    stampType: "pe",
+    requiresDiscipline: false,
+  },
 ];
 
 /**

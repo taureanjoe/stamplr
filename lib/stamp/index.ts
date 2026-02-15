@@ -1,6 +1,7 @@
 import type { StampRenderOptions } from "@/lib/stamp/types";
 import { renderTexasStamp } from "@/lib/stamp/templates/texas";
 import { renderMassachusettsStamp } from "@/lib/stamp/templates/massachusetts";
+import { renderMissouriStamp } from "@/lib/stamp/templates/missouri";
 
 export type { StampOptions, StampRenderOptions } from "@/lib/stamp/types";
 export {
@@ -18,6 +19,9 @@ export function renderStamp(options: StampRenderOptions): string {
   }
   if (options.template === "massachusetts") {
     return renderMassachusettsStamp(options);
+  }
+  if (options.template === "missouri") {
+    return renderMissouriStamp(options);
   }
   return renderGenericStamp(options);
 }
