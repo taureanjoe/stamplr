@@ -19,8 +19,10 @@ function useStampSvg(params: {
   watermarked: boolean;
 }) {
   const [svg, setSvg] = useState<string | null>(null);
+  const [previewError, setPreviewError] = useState(false);
   useEffect(() => {
     let cancelled = false;
+    setPreviewError(false);
     const q = new URLSearchParams({
       state: params.state,
       name: params.name,
@@ -29,18 +31,26 @@ function useStampSvg(params: {
       watermarked: params.watermarked ? "1" : "0",
     });
     fetch(`/api/preview?${q}`)
-      .then((r) => r.text())
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const ct = r.headers.get("content-type") || "";
+        if (!ct.includes("svg")) throw new Error("Not SVG");
+        return r.text();
+      })
       .then((text) => {
         if (!cancelled) setSvg(text);
       })
       .catch(() => {
-        if (!cancelled) setSvg(null);
+        if (!cancelled) {
+          setSvg(null);
+          setPreviewError(true);
+        }
       });
     return () => {
       cancelled = true;
     };
   }, [params.state, params.name, params.license, params.discipline, params.watermarked]);
-  return svg;
+  return { svg, previewError };
 }
 
 function downloadUrl(
@@ -70,7 +80,7 @@ export default function DesignPage() {
 
   const displayName = name || "JOHN DOE";
   const displayLicense = license || "No. PE123456";
-  const svg = useStampSvg({
+  const { svg, previewError } = useStampSvg({
     state,
     name: displayName,
     license: displayLicense,
@@ -313,8 +323,19 @@ export default function DesignPage() {
                     )}}
                   />
                 ) : (
-                  <div style={{ aspectRatio: '1/1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <p style={{ color: '#999', fontFamily: "'Share Tech Mono', monospace", fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Loading preview...</p>
+                  <div style={{ aspectRatio: '1/1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                    {previewError ? (
+                      <>
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <p style={{ color: '#999', fontFamily: "'Share Tech Mono', monospace", fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Preview unavailable</p>
+                        <p style={{ color: '#aaa', fontFamily: "'DM Sans', sans-serif", fontSize: 12 }}>Try refreshing the page</p>
+                      </>
+                    ) : (
+                      <>
+                        <div style={{ width: 24, height: 24, border: '2px solid #ccc', borderTopColor: '#4e9eff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                        <p style={{ color: '#999', fontFamily: "'Share Tech Mono', monospace", fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>Loading preview...</p>
+                      </>
+                    )}
                   </div>
                 )}
               </div>
