@@ -79,10 +79,10 @@ function AccSection({
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div style={{ borderBottom: '1px solid var(--border)' }}>
-      {/* Mobile accordion header */}
+      {/* Mobile accordion header (hidden on desktop via CSS) */}
       <div
-        className="md:hidden"
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', cursor: 'pointer', userSelect: 'none', WebkitUserSelect: 'none' }}
+        className="acc-mobile-header"
+        style={{ alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', cursor: 'pointer', userSelect: 'none', WebkitUserSelect: 'none' }}
         onClick={() => setOpen(!open)}
       >
         <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-dim)', fontWeight: 500 }}>
@@ -93,7 +93,7 @@ function AccSection({
         </span>
       </div>
       {/* Desktop static label */}
-      <div className="hidden md:block" style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 500, padding: '12px 0 8px 2px' }}>
+      <div className="acc-desktop-label" style={{ fontFamily: "'DM Mono', monospace", fontSize: 9.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 500, padding: '12px 0 8px 2px' }}>
         {label}
       </div>
       {/* Body: always visible on desktop, toggled on mobile */}
@@ -110,6 +110,56 @@ function AccSection({
   );
 }
 
+/* ── Size Stepper ── */
+function SizeStepper({ label, value, min, max, onDec, onInc, onReset }: {
+  label: string; value: number; min: number; max: number;
+  onDec: () => void; onInc: () => void; onReset: () => void;
+}) {
+  const btnStyle: React.CSSProperties = {
+    width: 30, height: 30, borderRadius: 6,
+    border: '1px solid var(--border-accent)', background: 'var(--bg3)',
+    color: 'var(--text-dim)', fontSize: 16, cursor: 'pointer',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    flexShrink: 0, padding: 0, fontFamily: "'DM Sans', sans-serif", lineHeight: 1,
+    touchAction: 'manipulation',
+  };
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
+      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.06em', minWidth: 28 }}>{label}</span>
+      <button type="button" style={btnStyle} onClick={onDec} disabled={value <= min} aria-label={`decrease ${label}`}>−</button>
+      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: 'var(--text-dim)', minWidth: 30, textAlign: 'center' }}>{value}</span>
+      <button type="button" style={btnStyle} onClick={onInc} disabled={value >= max} aria-label={`increase ${label}`}>+</button>
+      <button type="button" onClick={onReset} style={{
+        fontFamily: "'DM Mono', monospace", fontSize: 9, letterSpacing: '0.07em',
+        color: 'var(--text-muted)', background: 'none', border: '1px solid var(--border)',
+        borderRadius: 4, padding: '0 8px', cursor: 'pointer', height: 30,
+        display: 'flex', alignItems: 'center', textTransform: 'uppercase', touchAction: 'manipulation',
+      }}>Reset</button>
+    </div>
+  );
+}
+
+/* ── Toggle ── */
+function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
+  return (
+    <label style={{ position: 'relative', width: 36, height: 20, cursor: 'pointer', flexShrink: 0 }}>
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} style={{ display: 'none' }} />
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: checked ? 'var(--accent-dim)' : 'var(--bg3)',
+        border: checked ? '1px solid rgba(96,165,250,0.4)' : '1px solid var(--border-accent)',
+        borderRadius: 20, transition: 'all 0.2s',
+      }} />
+      <div style={{
+        position: 'absolute', top: 3, left: checked ? 19 : 3,
+        width: 12, height: 12,
+        background: checked ? 'var(--accent)' : 'var(--text-muted)',
+        borderRadius: '50%', transition: 'all 0.2s',
+      }} />
+    </label>
+  );
+}
+
 export default function DesignPage() {
   const [sealType, setSealType] = useState("pe");
   const [state, setState] = useState("tx");
@@ -119,6 +169,10 @@ export default function DesignPage() {
   const [fileType, setFileType] = useState<"svg" | "png" | "pdf">("svg");
   const [watermarked, setWatermarked] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [nameSize, setNameSize] = useState(18);
+  const [licSize, setLicSize] = useState(14);
+  const [wrapName, setWrapName] = useState(false);
+  const [showDiscOnSeal, setShowDiscOnSeal] = useState(true);
 
   const displayName = name || "JOHN DOE";
   const displayLicense = license || "000000";
@@ -186,6 +240,8 @@ export default function DesignPage() {
       {/* ── PAGE BODY ── */}
       <div className="flex flex-col pb-[90px] md:!grid md:!pb-0 md:!items-start" style={{ minHeight: 'calc(100vh - 52px)' }} id="pageBody">
         <style>{`
+          .acc-mobile-header { display: flex; }
+          .acc-desktop-label { display: none; }
           @media (min-width: 768px) {
             #pageBody {
               display: grid !important;
@@ -194,6 +250,8 @@ export default function DesignPage() {
               min-height: calc(100vh - 52px) !important;
               padding-bottom: 0 !important;
             }
+            .acc-mobile-header { display: none !important; }
+            .acc-desktop-label { display: block !important; }
           }
         `}</style>
 
@@ -266,7 +324,15 @@ export default function DesignPage() {
                 className="input-dark"
                 autoComplete="name"
               />
-              <span className="hint-text">As it appears on your license</span>
+              <SizeStepper
+                label="Size"
+                value={nameSize}
+                min={10}
+                max={26}
+                onDec={() => setNameSize((v) => Math.max(10, v - 1))}
+                onInc={() => setNameSize((v) => Math.min(26, v + 1))}
+                onReset={() => setNameSize(18)}
+              />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
               <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-dim)' }}>License Number</label>
@@ -279,7 +345,28 @@ export default function DesignPage() {
                 maxLength={12}
                 inputMode="numeric"
               />
+              <SizeStepper
+                label="Size"
+                value={licSize}
+                min={8}
+                max={22}
+                onDec={() => setLicSize((v) => Math.max(8, v - 1))}
+                onInc={() => setLicSize((v) => Math.min(22, v + 1))}
+                onReset={() => setLicSize(14)}
+              />
               <span className="hint-text">Must match your board-issued license number exactly</span>
+            </div>
+          </AccSection>
+
+          {/* Appearance */}
+          <AccSection label="Appearance">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '2px 0', minHeight: 36 }}>
+              <span style={{ fontSize: 13, color: 'var(--text-dim)' }}>Word wrap name</span>
+              <Toggle checked={wrapName} onChange={setWrapName} />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '2px 0', minHeight: 36 }}>
+              <span style={{ fontSize: 13, color: 'var(--text-dim)' }}>Show discipline on seal</span>
+              <Toggle checked={showDiscOnSeal} onChange={setShowDiscOnSeal} />
             </div>
           </AccSection>
 
@@ -312,7 +399,15 @@ export default function DesignPage() {
           </AccSection>
 
           {/* Legal box (desktop only) */}
-          <div className="hidden md:flex" style={{
+          <style>{`
+            #desktopLegal { display: none; }
+            #desktopGenBtn { display: none; }
+            @media (min-width: 768px) {
+              #desktopLegal { display: flex !important; }
+              #desktopGenBtn { display: flex !important; }
+            }
+          `}</style>
+          <div id="desktopLegal" style={{
             background: 'var(--bg3)', border: '1px solid var(--border)',
             borderLeft: '2px solid var(--amber)', borderRadius: 'var(--radius-sm)',
             padding: '10px 12px', gap: 9, alignItems: 'flex-start', margin: '6px 0 4px',
@@ -327,7 +422,7 @@ export default function DesignPage() {
           <button
             onClick={handleGenerate}
             disabled={generating}
-            className="hidden md:flex"
+            id="desktopGenBtn"
             style={{
               width: '100%', padding: 13, borderRadius: 'var(--radius)',
               background: 'var(--accent)', color: '#fff',
@@ -451,7 +546,11 @@ export default function DesignPage() {
             </div>
 
             {/* Desktop info panel beside stamp */}
-            <div className="hidden md:flex" style={{ flexDirection: 'column', gap: 18, maxWidth: 240 }}>
+            <style>{`
+              #desktopInfoPanel { display: none; }
+              @media (min-width: 768px) { #desktopInfoPanel { display: flex !important; } }
+            `}</style>
+            <div id="desktopInfoPanel" style={{ flexDirection: 'column', gap: 18, maxWidth: 240 }}>
               <div>
                 <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 17, fontWeight: 700, letterSpacing: '-0.3px', color: 'var(--text)', marginBottom: 4 }}>
                   {name || "Your Name"}
@@ -510,8 +609,18 @@ export default function DesignPage() {
           </div>
 
           {/* Mobile info row below stamp */}
-          <div className="md:hidden" style={{
-            width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          <style>{`
+            #mobileInfoRow { display: flex; }
+            #mobileGenWrap { display: block; }
+            #mobileLegal { display: flex; }
+            @media (min-width: 768px) {
+              #mobileInfoRow { display: none !important; }
+              #mobileGenWrap { display: none !important; }
+              #mobileLegal { display: none !important; }
+            }
+          `}</style>
+          <div id="mobileInfoRow" style={{
+            width: '100%', alignItems: 'center', justifyContent: 'space-between',
             padding: '0 16px 8px',
           }}>
             <div>
@@ -531,7 +640,7 @@ export default function DesignPage() {
           </div>
 
           {/* Mobile generate button */}
-          <div className="md:hidden" style={{ padding: '0 16px 8px' }}>
+          <div id="mobileGenWrap" style={{ padding: '0 16px 8px' }}>
             <button
               onClick={handleGenerate}
               disabled={generating}
@@ -572,10 +681,10 @@ export default function DesignPage() {
           </div>
 
           {/* Mobile legal */}
-          <div className="md:hidden" style={{
+          <div id="mobileLegal" style={{
             background: 'var(--bg3)', border: '1px solid var(--border)',
             borderLeft: '2px solid var(--amber)', borderRadius: 'var(--radius-sm)',
-            padding: '10px 12px', display: 'flex', gap: 9, alignItems: 'flex-start',
+            padding: '10px 12px', gap: 9, alignItems: 'flex-start',
             margin: '0 16px 6px',
           }}>
             <span style={{ fontSize: 13, color: 'var(--amber)', flexShrink: 0, marginTop: 1 }}>⚠</span>
@@ -589,12 +698,17 @@ export default function DesignPage() {
       </div>
 
       {/* ── STICKY UNLOCK BAR (mobile only) ── */}
-      <div className="md:hidden" style={{
+      <style>{`
+        #unlockBar { display: flex; }
+        @media (min-width: 768px) { #unlockBar { display: none !important; } }
+      `}</style>
+      <div id="unlockBar" style={{
         position: 'fixed', bottom: 0, left: 0, right: 0,
         background: 'rgba(19,19,23,0.97)', backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         borderTop: '1px solid var(--border-accent)',
         padding: '12px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
-        zIndex: 150, display: 'flex', flexDirection: 'column', gap: 6,
+        zIndex: 150, flexDirection: 'column', gap: 6,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
