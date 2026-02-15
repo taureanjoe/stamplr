@@ -4,26 +4,19 @@
  * Font: Technical Sans (or Arial fallback) for professional stamp look.
  */
 import type { StampRenderOptions } from "@/lib/stamp/types";
-import { readFileSync } from "fs";
-import { join } from "path";
 import {
   escapeXml,
   replaceNamePlaceholder,
   replaceLicensePlaceholder,
 } from "./placeholder-utils";
-
-const TEMPLATE_PATH = join(process.cwd(), "lib", "stamp", "templates", "texas-reference.svg");
+import { TEXAS_SVG } from "./texas-svg-data";
 
 /** Technical sans-serif - professional stamp font. Arial as fallback. */
 const FONT_FAMILY = "'Technical Sans', 'Technic', Arial, sans-serif";
 
 export function renderTexasStamp(options: StampRenderOptions): string {
-  let svg: string;
-  try {
-    svg = readFileSync(TEMPLATE_PATH, "utf-8");
-  } catch {
-    return fallbackTexasStamp(options);
-  }
+  let svg: string = TEXAS_SVG;
+  if (!svg) return fallbackTexasStamp(options);
 
   const name = (options.name || "JOHN M. DOE").toUpperCase();
   const license = options.licenseNumber || "000000";
