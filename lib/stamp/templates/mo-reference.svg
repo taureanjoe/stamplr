@@ -41,7 +41,7 @@
 <!-- ========= EDITABLE TEXT FIELDS ========= -->
 <text id="stamp-name" fill="black" xml:space="preserve" font-family="Gilda Display" font-size="96" letter-spacing="0em" text-anchor="middle"><tspan x="538.5" y="398.636"></tspan></text>
 <text id="stamp-name-line2" fill="black" xml:space="preserve" font-family="Gilda Display" font-size="96" letter-spacing="0em" text-anchor="middle"><tspan x="538.5" y="511.636"></tspan></text>
-<text id="stamp-license-label" fill="black" xml:space="preserve" font-family="Gilda Display" font-size="96" letter-spacing="0em" text-anchor="middle"><tspan x="538.5" y="621.636"></tspan></text>
+<text fill="black" xml:space="preserve" font-family="Gilda Display" font-size="96" letter-spacing="0em" text-anchor="middle"><tspan x="538.5" y="621.636">NUMBER</tspan></text>
 <text id="stamp-license" fill="black" xml:space="preserve" font-family="Gilda Display" font-size="96" letter-spacing="0em" text-anchor="middle"><tspan x="538.5" y="744.636"></tspan></text>
 <!-- ========================================= -->
 </svg>

@@ -37,7 +37,7 @@ export function renderMissouriStamp(options: StampRenderOptions): string {
 
   svg = setTspanTextById(svg, "stamp-name", firstName);
   svg = setTspanTextById(svg, "stamp-name-line2", lastName);
-  svg = setTspanTextById(svg, "stamp-license-label", license ? "No." : "");
+  // "NUMBER" label stays as-is (static text in the SVG)
   svg = setTspanTextById(svg, "stamp-license", license);
 
   if (options.watermarked) {
