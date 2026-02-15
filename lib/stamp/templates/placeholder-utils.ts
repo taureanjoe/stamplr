@@ -95,6 +95,23 @@ export function splitNameForTwoLines(name: string): [string, string] {
 }
 
 /**
+ * Split full name for three-line format (first / middle / last):
+ *   "JOHN M. DOE"  → ["JOHN", "M.", "DOE"]
+ *   "JOHN DOE"     → ["JOHN", "", "DOE"]
+ *   "JOHN"         → ["JOHN", "", ""]
+ */
+export function splitNameForThreeLines(name: string): [string, string, string] {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 3) {
+    return [parts[0], parts.slice(1, -1).join(" "), parts[parts.length - 1]];
+  }
+  if (parts.length === 2) {
+    return [parts[0], "", parts[1]];
+  }
+  return [parts[0] || "", "", ""];
+}
+
+/**
  * Replace name placeholder. Tries data-placeholder first, then content match.
  * Supports split format (name-first + name-last) for MA two-line stamps.
  */

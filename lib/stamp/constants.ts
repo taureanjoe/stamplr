@@ -39,6 +39,20 @@ export const STATES_WITH_TEMPLATES: StateConfig[] = [
     stampType: "pe",
     requiresDiscipline: false,
   },
+  {
+    code: "nh",
+    name: "New Hampshire",
+    template: "new-hampshire",
+    stampType: "pe",
+    requiresDiscipline: false,
+  },
+  {
+    code: "mi",
+    name: "Michigan",
+    template: "michigan",
+    stampType: "pe",
+    requiresDiscipline: false,
+  },
 ];
 
 /**
