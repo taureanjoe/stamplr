@@ -95,10 +95,10 @@ export function splitNameForTwoLines(name: string): [string, string] {
 }
 
 /**
- * Split full name for three-line format (first / middle / last):
- *   "JOHN M. DOE"  → ["JOHN", "M.", "DOE"]
- *   "JOHN DOE"     → ["JOHN", "", "DOE"]
- *   "JOHN"         → ["JOHN", "", ""]
+ * Split full name for three-line format mapped to positions (line1 / line2 / line3):
+ *   3 names: "JOHN M. DOE"  → ["JOHN", "M.", "DOE"]  (all three lines)
+ *   2 names: "JOHN DOE"     → ["JOHN", "DOE", ""]     (lines 1+2, adjacent)
+ *   1 name:  "JOHN"         → ["", "JOHN", ""]         (line 2 only, centered)
  */
 export function splitNameForThreeLines(name: string): [string, string, string] {
   const parts = name.trim().split(/\s+/);
@@ -106,9 +106,9 @@ export function splitNameForThreeLines(name: string): [string, string, string] {
     return [parts[0], parts.slice(1, -1).join(" "), parts[parts.length - 1]];
   }
   if (parts.length === 2) {
-    return [parts[0], "", parts[1]];
+    return [parts[0], parts[1], ""];
   }
-  return [parts[0] || "", "", ""];
+  return ["", parts[0] || "", ""];
 }
 
 /**

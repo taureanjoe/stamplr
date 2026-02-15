@@ -39,7 +39,7 @@ export function renderNewHampshireStamp(options: StampRenderOptions): string {
   svg = setTspanById(svg, "stamp-name", firstName);
   svg = setTspanById(svg, "stamp-name-middle", middleName);
   svg = setTspanById(svg, "stamp-name-line2", lastName);
-  svg = setTspanById(svg, "stamp-license", license ? `No.${license}` : "");
+  svg = setTspanById(svg, "stamp-license", license);
 
   if (options.watermarked) {
     svg = svg.replace(
