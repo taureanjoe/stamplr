@@ -53,14 +53,22 @@ export default function HomePage() {
       <div style={{ position: 'fixed', inset: 0, backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none', zIndex: 0 }} />
 
       {/* ── NAV ── */}
-      <nav style={{
+      <style>{`
+        #mainNav { padding: 0 40px; }
+        #navDesignBtn { font-size: 13px; padding: 7px 18px; border-radius: 20px; white-space: nowrap; }
+        @media (max-width: 768px) {
+          #mainNav { padding: 0 16px !important; }
+          #navDesignBtn { font-size: 12px !important; padding: 6px 14px !important; }
+        }
+      `}</style>
+      <nav id="mainNav" style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, height: 58,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', background: 'rgba(10,10,12,0.88)',
+        background: 'rgba(10,10,12,0.88)',
         backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
         borderBottom: '1px solid var(--border)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
           <Logo />
           <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8.5, letterSpacing: '0.1em', textTransform: 'uppercase', background: 'rgba(74,222,128,0.12)', color: '#4ade80', border: '1px solid rgba(74,222,128,0.25)', padding: '2px 7px', borderRadius: 20 }}>Beta</span>
         </div>
@@ -71,13 +79,13 @@ export default function HomePage() {
         `}</style>
         <ul id="navLinks" style={{ alignItems: 'center', gap: 2, listStyle: 'none', padding: 0, margin: 0 }}>
           {[["Features", "#features"], ["Pricing", "#pricing"], ["Support", "#"]].map(([label, href]) => (
-            <li key={label}><a href={href} style={{ fontSize: 13.5, color: 'var(--text-dim)', textDecoration: 'none', padding: '5px 13px', borderRadius: 'var(--r)', transition: 'color .15s, background .15s', display: 'flex', alignItems: 'center' }}>{label}</a></li>
+            <li key={label}><a href={href} style={{ fontSize: 13.5, color: 'var(--text-dim)', textDecoration: 'none', padding: '5px 13px', borderRadius: 20, transition: 'color .15s, background .15s', display: 'flex', alignItems: 'center' }}>{label}</a></li>
           ))}
         </ul>
 
-        <div id="navActions" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div id="navActions" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
           <button className="ghost btn-glass">Log in</button>
-          <Link href="/design" style={{ fontSize: 13, fontWeight: 600, color: '#fff', background: 'var(--accent)', border: 'none', padding: '7px 18px', borderRadius: 20, cursor: 'pointer', textDecoration: 'none', fontFamily: "'DM Sans', sans-serif", letterSpacing: '.01em', transition: 'all .15s' }}>
+          <Link id="navDesignBtn" href="/design" style={{ fontWeight: 600, color: '#fff', background: 'var(--accent)', border: 'none', cursor: 'pointer', textDecoration: 'none', fontFamily: "'DM Sans', sans-serif", letterSpacing: '.01em', transition: 'all .15s', display: 'inline-flex', alignItems: 'center' }}>
             Design Your Stamp →
           </Link>
         </div>
@@ -86,11 +94,14 @@ export default function HomePage() {
       {/* ── HERO ── */}
       <section style={{ position: 'relative', zIndex: 1 }}>
         <style>{`
-          #heroGrid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 120px 80px 80px; gap: 40px; maxWidth: 1300px; margin: 0 auto; min-height: 100vh; }
+          #heroGrid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 120px 80px 80px; gap: 40px; max-width: 1300px; margin: 0 auto; min-height: 100vh; }
+          #heroActions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
           @media (max-width: 768px) {
-            #heroGrid { grid-template-columns: 1fr !important; padding: 80px 20px 40px !important; gap: 36px !important; min-height: auto !important; text-align: center; }
+            #heroGrid { grid-template-columns: 1fr !important; padding: 108px 20px 48px !important; gap: 32px !important; min-height: auto !important; text-align: center; }
             #heroVisual { order: -1; }
-            #heroActions { justify-content: center; flex-wrap: wrap; }
+            #heroActions { justify-content: center; gap: 10 !important; }
+            #heroActionPrimary { font-size: 13px !important; padding: 10px 20px !important; border-radius: 20px !important; }
+            #heroActionSecondary { font-size: 13px !important; padding: 10px 18px !important; border-radius: 20px !important; }
             #heroTrust { flex-wrap: wrap; justify-content: center; }
             .trust-sep-el { display: none !important; }
             #drawingScene { width: 100% !important; max-width: 420px; }
@@ -118,18 +129,18 @@ export default function HomePage() {
               Generate, customize, and download state-compliant engineering seals in minutes. Trusted by licensed PEs across {stateCount}+ states — no design software required.
             </p>
 
-            <div id="heroActions" style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 48 }}>
-              <Link href="/design" style={{
+            <div id="heroActions" style={{ marginBottom: 48 }}>
+              <Link id="heroActionPrimary" href="/design" style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: 14.5, fontWeight: 600,
                 color: '#fff', background: 'var(--accent)', border: 'none',
-                padding: '12px 26px', borderRadius: 12, cursor: 'pointer',
-                transition: 'all .2s', display: 'flex', alignItems: 'center', gap: 8,
+                padding: '12px 24px', borderRadius: 20, cursor: 'pointer',
+                transition: 'all .2s', display: 'inline-flex', alignItems: 'center', gap: 8,
                 textDecoration: 'none',
               }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 Design Your Stamp
               </Link>
-              <a href="#features" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500, color: 'var(--text-mid, #9898a8)', background: 'none', border: '1px solid var(--border2, rgba(255,255,255,0.11))', padding: '12px 22px', borderRadius: 12, cursor: 'pointer', textDecoration: 'none' }}>See how it works</a>
+              <a id="heroActionSecondary" href="#features" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 500, color: 'var(--text-mid, #9898a8)', background: 'none', border: '1px solid var(--border2, rgba(255,255,255,0.11))', padding: '12px 20px', borderRadius: 20, cursor: 'pointer', textDecoration: 'none', marginLeft: 0 }}>See how it works</a>
             </div>
 
             <div id="heroTrust" style={{ display: 'flex', alignItems: 'center', gap: 20, paddingTop: 20, borderTop: '1px solid var(--border)' }}>
@@ -155,11 +166,11 @@ export default function HomePage() {
           {/* Right visual: Engineering drawing */}
           <div id="heroVisual" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
             <div id="drawingScene" style={{ position: 'relative', width: 480, flexShrink: 0 }}>
-              {/* Floating badges */}
-              <div style={{ position: 'absolute', top: -24, left: -20, background: 'var(--bg3)', border: '1px solid var(--border2, rgba(255,255,255,0.11))', borderRadius: 'var(--r)', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'DM Mono', monospace", fontSize: 10.5, color: 'var(--text-mid, #9898a8)', letterSpacing: '.04em', whiteSpace: 'nowrap', boxShadow: '0 4px 20px rgba(0,0,0,.4)', animation: 'floatUp 3s ease-in-out infinite', zIndex: 10 }}>
+              {/* Floating badges — pill shape like Beta */}
+              <div style={{ position: 'absolute', top: -24, left: -20, background: 'var(--bg3)', border: '1px solid var(--border2, rgba(255,255,255,0.11))', borderRadius: 20, padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'DM Mono', monospace", fontSize: 10.5, color: 'var(--text-mid, #9898a8)', letterSpacing: '.04em', whiteSpace: 'nowrap', boxShadow: '0 4px 20px rgba(0,0,0,.4)', animation: 'floatUp 3s ease-in-out infinite', zIndex: 10 }}>
                 <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#4ade80' }} />Seal generated
               </div>
-              <div style={{ position: 'absolute', top: 40, right: -30, background: 'var(--bg3)', border: '1px solid var(--border2, rgba(255,255,255,0.11))', borderRadius: 'var(--r)', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'DM Mono', monospace", fontSize: 10.5, color: 'var(--text-mid, #9898a8)', letterSpacing: '.04em', whiteSpace: 'nowrap', boxShadow: '0 4px 20px rgba(0,0,0,.4)', animation: 'floatUp 3s ease-in-out .8s infinite', zIndex: 10 }}>
+              <div style={{ position: 'absolute', top: 40, right: -30, background: 'var(--bg3)', border: '1px solid var(--border2, rgba(255,255,255,0.11))', borderRadius: 20, padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'DM Mono', monospace", fontSize: 10.5, color: 'var(--text-mid, #9898a8)', letterSpacing: '.04em', whiteSpace: 'nowrap', boxShadow: '0 4px 20px rgba(0,0,0,.4)', animation: 'floatUp 3s ease-in-out .8s infinite', zIndex: 10 }}>
                 <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#60a5fa' }} />SVG · PNG · PDF ready
               </div>
 
