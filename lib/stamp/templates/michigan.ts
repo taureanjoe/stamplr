@@ -2,7 +2,7 @@
  * Michigan PE stamp: uses embedded SVG template.
  * MI does NOT require discipline on the stamp.
  * Name is three lines (first / middle / last), license number is editable.
- * Font: Overpass Mono, size 75, letter-spacing 0em (matching Figma export).
+ * Font: Roboto Mono, size 75, letter-spacing 0em (matching Figma export).
  * Uses regex-based ID replacement to set textContent of <tspan> elements with IDs:
  * stamp-name, stamp-name-middle, stamp-name-line2, stamp-license.
  * SVG structure, layout, paths, fonts, and styling are never modified.
@@ -44,7 +44,7 @@ export function renderMichiganStamp(options: StampRenderOptions): string {
   if (options.watermarked) {
     svg = svg.replace(
       "</svg>",
-      `<text x="480" y="540" text-anchor="middle" fill="#ccc" font-size="96" font-weight="bold" font-family="Overpass Mono, monospace" opacity="0.5">SAMPLE</text>\n</svg>`
+      `<text x="480" y="540" text-anchor="middle" fill="#ccc" font-size="96" font-weight="bold" font-family="Roboto Mono, monospace" opacity="0.5">SAMPLE</text>\n</svg>`
     );
   }
 
@@ -59,9 +59,9 @@ function fallbackMIStamp(options: StampRenderOptions): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <rect width="100%" height="100%" fill="white"/>
   <circle cx="${cx}" cy="${cx}" r="${size * 0.45}" fill="none" stroke="black" stroke-width="2"/>
-  <text x="${cx}" y="${cx - 36}" text-anchor="middle" font-family="Overpass Mono, monospace" font-weight="bold" font-size="16" fill="black">MICHIGAN</text>
-  <text x="${cx}" y="${cx - 12}" text-anchor="middle" font-family="Overpass Mono, monospace" font-weight="bold" font-size="18" fill="black">${escapeXml(name)}</text>
-  <text x="${cx}" y="${cx + 12}" text-anchor="middle" font-family="Overpass Mono, monospace" font-weight="bold" font-size="14" fill="black">${escapeXml(license)}</text>
-  <text x="${cx}" y="${cx + 36}" text-anchor="middle" font-family="Overpass Mono, monospace" font-weight="bold" font-size="12" fill="black">PROFESSIONAL ENGINEER</text>
+  <text x="${cx}" y="${cx - 36}" text-anchor="middle" font-family="Roboto Mono, monospace" font-weight="bold" font-size="16" fill="black">MICHIGAN</text>
+  <text x="${cx}" y="${cx - 12}" text-anchor="middle" font-family="Roboto Mono, monospace" font-weight="bold" font-size="18" fill="black">${escapeXml(name)}</text>
+  <text x="${cx}" y="${cx + 12}" text-anchor="middle" font-family="Roboto Mono, monospace" font-weight="bold" font-size="14" fill="black">${escapeXml(license)}</text>
+  <text x="${cx}" y="${cx + 36}" text-anchor="middle" font-family="Roboto Mono, monospace" font-weight="bold" font-size="12" fill="black">PROFESSIONAL ENGINEER</text>
 </svg>`;
 }
