@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
     const name = searchParams.get("name") ?? "JOHN M. DOE";
     const licenseNumber = searchParams.get("license") ?? "000000";
     const discipline = searchParams.get("discipline") ?? "Professional Engineer";
+    const expirationDate = searchParams.get("expiration") ?? "";
     const watermarked = searchParams.get("watermarked") === "1";
 
     const state = STATES_WITH_TEMPLATES.find((s) => s.code === stateCode) ?? STATES_WITH_TEMPLATES[0];
@@ -22,6 +23,7 @@ export async function GET(request: NextRequest) {
       name,
       licenseNumber,
       discipline,
+      ...(state.requiresExpiration && { expirationDate }),
       watermarked,
       size: 400,
     };

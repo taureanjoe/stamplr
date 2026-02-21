@@ -16,6 +16,7 @@ function useStampSvg(params: {
   name: string;
   license: string;
   discipline: string;
+  expiration?: string;
   watermarked: boolean;
 }) {
   const [svg, setSvg] = useState<string | null>(null);
@@ -30,6 +31,7 @@ function useStampSvg(params: {
       discipline: params.discipline,
       watermarked: params.watermarked ? "1" : "0",
     });
+    if (params.expiration !== undefined) q.set("expiration", params.expiration);
     fetch(`/api/preview?${q}`)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -47,12 +49,12 @@ function useStampSvg(params: {
         }
       });
     return () => { cancelled = true; };
-  }, [params.state, params.name, params.license, params.discipline, params.watermarked]);
+  }, [params.state, params.name, params.license, params.discipline, params.expiration, params.watermarked]);
   return { svg, previewError };
 }
 
 function downloadUrl(
-  params: { state: string; name: string; license: string; discipline: string; watermarked: boolean },
+  params: { state: string; name: string; license: string; discipline: string; expiration?: string; watermarked: boolean },
   format: string
 ) {
   const q = new URLSearchParams({
@@ -63,6 +65,7 @@ function downloadUrl(
     watermarked: params.watermarked ? "1" : "0",
     format,
   });
+  if (params.expiration !== undefined) q.set("expiration", params.expiration);
   return `/api/export?${q}`;
 }
 
@@ -165,6 +168,7 @@ export default function DesignPage() {
   const [state, setState] = useState("tx");
   const [name, setName] = useState("");
   const [license, setLicense] = useState("");
+  const [expiration, setExpiration] = useState("");
   const [discipline, setDiscipline] = useState("Civil");
   const [fileType, setFileType] = useState<"svg" | "png" | "pdf">("svg");
   const [watermarked, setWatermarked] = useState(false);
@@ -174,19 +178,28 @@ export default function DesignPage() {
   const [wrapName, setWrapName] = useState(false);
   const [showDiscOnSeal, setShowDiscOnSeal] = useState(true);
 
+  const availableStates = STATES_WITH_TEMPLATES.filter((s) => s.stampType === sealType);
+  const currentStateConfig = STATES_WITH_TEMPLATES.find((s) => s.code === state);
+
   const displayName = name || "JOHN DOE";
   const displayLicense = license || "000000";
+  const displayExpiration = expiration || "00/00/00";
   const { svg, previewError } = useStampSvg({
     state,
     name: displayName,
     license: displayLicense,
     discipline,
+    ...(currentStateConfig?.requiresExpiration && { expiration: displayExpiration }),
     watermarked,
   });
-  const params = { state, name: displayName, license: displayLicense, discipline, watermarked };
-
-  const availableStates = STATES_WITH_TEMPLATES.filter((s) => s.stampType === sealType);
-  const currentStateConfig = STATES_WITH_TEMPLATES.find((s) => s.code === state);
+  const params = {
+    state,
+    name: displayName,
+    license: displayLicense,
+    discipline,
+    ...(currentStateConfig?.requiresExpiration && { expiration: displayExpiration }),
+    watermarked,
+  };
   const disciplines = (SEAL_TYPE_DISCIPLINES[sealType] ?? PE_DISCIPLINES) as readonly string[];
   const showDiscipline = sealType === "pe";
 
@@ -356,6 +369,20 @@ export default function DesignPage() {
               />
               <span className="hint-text">Must match your board-issued license number exactly</span>
             </div>
+            {currentStateConfig?.requiresExpiration && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-dim)' }}>Expiration Date</label>
+                <input
+                  type="text"
+                  value={expiration}
+                  onChange={(e) => setExpiration(e.target.value)}
+                  placeholder="MM/DD/YY or 00/00/00"
+                  className="input-dark"
+                  maxLength={10}
+                />
+                <span className="hint-text">License expiration (e.g. 12/31/25)</span>
+              </div>
+            )}
           </AccSection>
 
           {/* Appearance */}
@@ -493,10 +520,10 @@ export default function DesignPage() {
                 {svg ? (
                   <div
                     style={{ width: 'calc(100% - 16px)', height: 'calc(100% - 16px)' }}
-                    dangerouslySetInnerHTML={{ __html: svg.replace(
-                      /<svg /,
-                      '<svg style="width:100%;height:100%;display:block" '
-                    )}}
+                    dangerouslySetInnerHTML={{ __html: (() => {
+                      const cleaned = svg.replace(/^\s*<\?xml[\s\S]*?\?>\s*/i, '').trim();
+                      return cleaned.replace(/<svg\s/, '<svg style="width:100%;height:100%;display:block" ');
+                    })()}}
                   />
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>

@@ -14,6 +14,8 @@ export interface StateConfig {
   stampType: "pe" | "notary";
   /** If true, discipline is shown on the stamp and user must select it */
   requiresDiscipline: boolean;
+  /** If true, expiration date field is shown and used on the stamp (e.g. Nevada) */
+  requiresExpiration?: boolean;
 }
 
 /** States that have proper templates - only these appear in the dropdown */
@@ -52,6 +54,14 @@ export const STATES_WITH_TEMPLATES: StateConfig[] = [
     template: "michigan",
     stampType: "pe",
     requiresDiscipline: false,
+  },
+  {
+    code: "nv",
+    name: "Nevada",
+    template: "nevada",
+    stampType: "pe",
+    requiresDiscipline: true,
+    requiresExpiration: true,
   },
 ];
 
