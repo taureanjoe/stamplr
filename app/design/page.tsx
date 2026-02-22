@@ -168,7 +168,9 @@ export default function DesignPage() {
   const [state, setState] = useState("tx");
   const [name, setName] = useState("");
   const [license, setLicense] = useState("");
-  const [expiration, setExpiration] = useState("");
+  const [expMM, setExpMM] = useState("");
+  const [expDD, setExpDD] = useState("");
+  const [expYY, setExpYY] = useState("");
   const [discipline, setDiscipline] = useState("Civil");
   const [fileType, setFileType] = useState<"svg" | "png" | "pdf">("svg");
   const [watermarked, setWatermarked] = useState(false);
@@ -183,7 +185,7 @@ export default function DesignPage() {
 
   const displayName = name || "JOHN DOE";
   const displayLicense = license || "000000";
-  const displayExpiration = expiration || "00/00/00";
+  const displayExpiration = [expMM || "00", expDD || "00", expYY || "00"].join("/");
   const { svg, previewError } = useStampSvg({
     state,
     name: displayName,
@@ -372,15 +374,41 @@ export default function DesignPage() {
             {currentStateConfig?.requiresExpiration && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                 <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-dim)' }}>Expiration Date</label>
-                <input
-                  type="text"
-                  value={expiration}
-                  onChange={(e) => setExpiration(e.target.value)}
-                  placeholder="MM/DD/YY or 00/00/00"
-                  className="input-dark"
-                  maxLength={10}
-                />
-                <span className="hint-text">License expiration (e.g. 12/31/25)</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <input
+                    type="text"
+                    value={expMM}
+                    onChange={(e) => setExpMM(e.target.value.replace(/\D/g, "").slice(0, 2))}
+                    placeholder="MM"
+                    className="input-dark"
+                    maxLength={2}
+                    inputMode="numeric"
+                    style={{ width: 52, textAlign: 'center' }}
+                  />
+                  <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>/</span>
+                  <input
+                    type="text"
+                    value={expDD}
+                    onChange={(e) => setExpDD(e.target.value.replace(/\D/g, "").slice(0, 2))}
+                    placeholder="DD"
+                    className="input-dark"
+                    maxLength={2}
+                    inputMode="numeric"
+                    style={{ width: 52, textAlign: 'center' }}
+                  />
+                  <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>/</span>
+                  <input
+                    type="text"
+                    value={expYY}
+                    onChange={(e) => setExpYY(e.target.value.replace(/\D/g, "").slice(0, 2))}
+                    placeholder="YY"
+                    className="input-dark"
+                    maxLength={2}
+                    inputMode="numeric"
+                    style={{ width: 52, textAlign: 'center' }}
+                  />
+                </div>
+                <span className="hint-text">2 digits each: MM / DD / YY</span>
               </div>
             )}
           </AccSection>
