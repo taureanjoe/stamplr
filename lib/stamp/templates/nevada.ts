@@ -30,9 +30,9 @@ function replaceText8WithTextOnPath(svg: string, number: string): string {
   if (!svg.includes("xmlns:xlink")) {
     svg = svg.replace(/<svg\s/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ');
   }
-  // Bottom arc: left→right, sweep-flag=0 (counter-clockwise) so arc bows downward; radius 122 = just inside inner ring. Center 168,168.
+  // Bottom arc: left→right, sweep-flag=0 so arc bows downward; radius 133. Center 168,168.
   if (svg.includes('id="defs1"')) {
-    svg = svg.replace(/<defs\s+id="defs1"\s*\/>/, `<defs id="defs1"><path id="license-arc" d="M 46,168 A 122,122 0 0 0 290,168"/></defs>`);
+    svg = svg.replace(/<defs\s+id="defs1"\s*\/>/, `<defs id="defs1"><path id="license-arc" d="M 35,168 A 133,133 0 0 0 301,168"/></defs>`);
   }
   const label = escapeXml(`No. ${number || "00000"}`);
   const textEl = `<text font-family="sans-serif" font-size="21.3333" fill="#000000"><textPath xlink:href="#${pathId}" startOffset="50%" text-anchor="middle">${label}</textPath></text>`;
