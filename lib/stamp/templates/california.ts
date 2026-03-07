@@ -19,7 +19,7 @@ const NAME_ARC_D = "M 66,174 A 102,102 0 0 1 270,174";
 const DISC_ARC_D = "M 49,168 A 119,119 0 0 0 287,168";
 
 function updateLicenseNumber(svg: string, number: string): string {
-  const re = /(<tspan[^>]*\bid="tspan17"[^>]*>)([^<]*)(<\/tspan>)/s;
+  const re = /(<tspan[^>]*\bid="tspan17"[^>]*>)([^<]*)(<\/tspan>)/;
   return svg.replace(re, (_, open, _content, close) => open + escapeXml(number || "00000") + close);
 }
 

@@ -27,7 +27,7 @@ function buildNameArcPath(): string {
 
 /** Update only the number portion of "No. 00000" in tspan14. */
 function updateLicenseNumber(svg: string, number: string): string {
-  const re = /(<tspan[^>]*\bid="tspan14"[^>]*>)([^<]*?)(<\/tspan>)/s;
+  const re = /(<tspan[^>]*\bid="tspan14"[^>]*>)([^<]*?)(<\/tspan>)/;
   const label = `No. ${escapeXml(number || "00000")}`;
   return svg.replace(re, (_, open, _content, close) => open + label + close);
 }
