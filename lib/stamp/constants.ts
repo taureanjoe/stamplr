@@ -63,6 +63,13 @@ export const STATES_WITH_TEMPLATES: StateConfig[] = [
     requiresDiscipline: true,
     requiresExpiration: true,
   },
+  {
+    code: "al",
+    name: "Alabama",
+    template: "alabama",
+    stampType: "pe",
+    requiresDiscipline: false,
+  },
 ];
 
 /**
