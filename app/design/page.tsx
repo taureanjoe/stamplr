@@ -50,6 +50,7 @@ function useStampSvg(params: {
       });
     return () => { cancelled = true; };
   }, [params.state, params.name, params.license, params.discipline, params.expiration, params.watermarked]);
+
   return { svg, previewError };
 }
 

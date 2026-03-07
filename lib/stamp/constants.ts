@@ -70,6 +70,13 @@ export const STATES_WITH_TEMPLATES: StateConfig[] = [
     stampType: "pe",
     requiresDiscipline: false,
   },
+  {
+    code: "ca",
+    name: "California",
+    template: "california",
+    stampType: "pe",
+    requiresDiscipline: true,
+  },
 ];
 
 /**

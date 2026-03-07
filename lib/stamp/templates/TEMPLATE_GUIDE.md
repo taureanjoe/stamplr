@@ -54,20 +54,12 @@ For professional stamp appearance, use **Technical Sans** (or similar technical 
 - Arial is the fallback when Technical Sans is not available.
 - When using placeholders, the app preserves your template's font – so set the correct font in the SVG.
 
-## Future: Arc / Curved Text
+## Arc / Curved Text (text on circular path)
 
-For designs that need text along a curve (e.g., around the seal), SVG supports `<textPath>`:
+For stamps with **text along a curve** (e.g. name or discipline around the seal), we inject `<path>` arcs at render time and replace the text blocks with `<textPath xlink:href="#...">`. Do **not** use `<circle>` in defs for textPath when the SVG is inlined in HTML—browsers need a `<path>` with arc data.
 
-```xml
-<defs>
-  <path id="nameArc" d="M 100 100 A 80 80 0 0 1 200 100"/>
-</defs>
-<text>
-  <textPath href="#nameArc" data-placeholder="name">JOHN M. DOE</textPath>
-</text>
-```
-
-Support for `textPath` placeholders can be added when needed.
+- **Reference implementations:** Alabama, Nevada, California in `lib/stamp/templates/`.
+- **Full SOP and reusable prompt:** See **`docs/STAMP_CIRCULAR_TEXT_SOP.md`** (how to add/update when you have an SVG, how to move text up/down, and a copy-paste prompt for another state).
 
 ## Checklist for New Templates
 
