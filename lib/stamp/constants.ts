@@ -71,6 +71,13 @@ export const STATES_WITH_TEMPLATES: StateConfig[] = [
     requiresDiscipline: false,
   },
   {
+    code: "ar",
+    name: "Arkansas",
+    template: "arkansas",
+    stampType: "pe",
+    requiresDiscipline: false,
+  },
+  {
     code: "ca",
     name: "California",
     template: "california",

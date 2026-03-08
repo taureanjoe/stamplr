@@ -6,6 +6,7 @@ import { renderNewHampshireStamp } from "@/lib/stamp/templates/new-hampshire";
 import { renderMichiganStamp } from "@/lib/stamp/templates/michigan";
 import { renderNevadaStamp } from "@/lib/stamp/templates/nevada";
 import { renderAlabamaStamp } from "@/lib/stamp/templates/alabama";
+import { renderArkansasStamp } from "@/lib/stamp/templates/arkansas";
 import { renderCaliforniaStamp } from "@/lib/stamp/templates/california";
 
 export type { StampOptions, StampRenderOptions } from "@/lib/stamp/types";
@@ -39,6 +40,9 @@ export function renderStamp(options: StampRenderOptions): string {
   }
   if (options.template === "alabama") {
     return renderAlabamaStamp(options);
+  }
+  if (options.template === "arkansas") {
+    return renderArkansasStamp(options);
   }
   if (options.template === "california") {
     return renderCaliforniaStamp(options);
